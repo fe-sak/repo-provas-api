@@ -1,7 +1,6 @@
 export function Unauthorized() {
   return {
     statusCode: '401',
-    message: '',
   };
 }
 
