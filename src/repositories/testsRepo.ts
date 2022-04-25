@@ -28,24 +28,25 @@ export async function getByDisciplines() {
 }
 
 export async function getByTeachers() {
-  return database.term.findMany({
+  return database.test.findMany({
     select: {
-      number: true,
-      disciplines: {
+      name: true,
+      pdfUrl: true,
+      category: {
         select: {
           name: true,
-          disciplinesTeachers: {
+        },
+      },
+      disciplineTeacher: {
+        select: {
+          teacher: {
             select: {
-              teacher: {
-                select: { name: true },
-              },
-              tests: {
-                select: {
-                  name: true,
-                  pdfUrl: true,
-                  category: { select: { name: true } },
-                },
-              },
+              name: true,
+            },
+          },
+          discipline: {
+            select: {
+              name: true,
             },
           },
         },
