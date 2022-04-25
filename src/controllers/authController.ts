@@ -1,18 +1,19 @@
 import { Request, Response } from 'express';
-import * as services from '../services/authServices.js';
+import * as authServices from '../services/authServices.js';
+import * as usersRepo from '../repositories/usersRepo.js';
 
 export async function signUp(req: Request, res: Response) {
-  const signup: services.ISignup = req.body;
+  const signup: usersRepo.ISignup = req.body;
 
-  await services.signUp(signup);
+  await authServices.signUp(signup);
 
   return res.sendStatus(201);
 }
 
 export async function logIn(req: Request, res: Response) {
-  const login: services.ILogin = req.body;
+  const login: authServices.ILogin = req.body;
 
-  const token = await services.logIn(login);
+  const token = await authServices.logIn(login);
 
   return res.send(token);
 }

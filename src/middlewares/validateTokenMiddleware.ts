@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import jwt from 'jsonwebtoken';
+import * as services from '../services/authServices.js';
 
 export default async function (
   req: Request,
@@ -7,11 +7,9 @@ export default async function (
   next: NextFunction
 ) {
   const { authorization: token } = req.headers;
+  if (!token) return res.sendStatus(401);
 
-  const secretKey = process.env.JWT_SECRET;
-
-  const user = jwt.verify(token, secretKey);
-
+  const user = await services.getByToken(token);
   res.locals.user = user;
   next();
 }
