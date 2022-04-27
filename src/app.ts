@@ -14,6 +14,4 @@ app.use(router);
 
 app.use(errorHandler);
 
-app.listen(process.env.PORT, () => {
-  console.log(`Listening on ${process.env.PORT}...`);
-});
+export default app;
