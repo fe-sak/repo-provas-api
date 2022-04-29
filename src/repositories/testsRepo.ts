@@ -25,6 +25,11 @@ export async function getByDisciplines() {
                   views: true,
                   category: { select: { name: true } },
                 },
+                orderBy: {
+                  category: {
+                    name: 'asc',
+                  },
+                },
               },
             },
           },
@@ -63,6 +68,15 @@ export async function getByTeachers() {
       },
     },
   });
+}
+export type testTypes = {
+  name: string;
+  pdfUrl: string;
+  categoryId: number;
+  disciplineTeacherId: number;
+};
+export async function create(test: testTypes) {
+  await database.test.create({ data: test });
 }
 
 export async function incrementView(testId: number) {

@@ -1,4 +1,6 @@
 import * as testsRepo from '../repositories/testsRepo.js';
+import * as categoriesRepo from '../repositories/categoriesRepo.js';
+import * as disciplinesTeachersRepo from '../repositories/disciplinesTeachers.js';
 import * as errors from '../errors/index.js';
 
 export async function getTestsByDisciplines() {
@@ -23,4 +25,18 @@ export async function addView(testId: string) {
   if (!testExists) throw errors.NotFound();
 
   await testsRepo.incrementView(testIdNumber);
+}
+
+export async function createTest(test: testsRepo.testTypes) {
+  const { categoryId, disciplineTeacherId } = test;
+
+  const categoryExists = await categoriesRepo.readById(categoryId);
+
+  const disciplineTeacherExists = await disciplinesTeachersRepo.readById(
+    disciplineTeacherId
+  );
+
+  if (!categoryExists || !disciplineTeacherExists) throw errors.NotFound();
+
+  await testsRepo.create(test);
 }

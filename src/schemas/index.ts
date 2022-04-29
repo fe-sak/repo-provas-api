@@ -10,3 +10,10 @@ export const loginSchema = Joi.object({
   email: Joi.string().required(),
   password: Joi.string().required().min(8),
 });
+
+export const createTestSchema = Joi.object({
+  name: Joi.string().required().max(20),
+  pdfUrl: Joi.string().required(),
+  categoryId: Joi.number().required(),
+  disciplineTeacherId: Joi.number().required(),
+});

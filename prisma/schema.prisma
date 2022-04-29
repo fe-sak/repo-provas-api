@@ -46,6 +46,8 @@ model DisciplineTeacher {
   discipline   Discipline @relation(fields: [disciplineId], references: [id])
   tests        Test[]
 
+
+  @@unique([teacherId, disciplineId])
   @@map("disciplinesTeachers")
 }
 

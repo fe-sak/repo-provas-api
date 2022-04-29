@@ -22,3 +22,10 @@ export async function addView(req: Request, res: Response) {
 
   return res.sendStatus(201);
 }
+
+export async function createTest(req: Request, res: Response) {
+  const test = req.body;
+
+  await services.createTest(test);
+  return res.sendStatus(201);
+}
