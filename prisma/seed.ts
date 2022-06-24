@@ -15,12 +15,13 @@ async function main() {
     'React',
     'Python',
   ];
+
   await createTeachers(teachers);
   await createCategories(categories);
   await createTerms(terms);
   await createDisciplines(disciplines);
   await createDisciplinesTeachers();
-  await createTests();
+  await createTests(20);
 }
 
 main()
@@ -74,11 +75,11 @@ async function createDisciplinesTeachers() {
   await createMany(data, 'disciplineTeacher');
 }
 
-async function createTests() {
+async function createTests(quantity: number) {
   const categories = await database.category.findMany();
   const disciplinesTeachers = await database.disciplineTeacher.findMany();
 
-  const data = Array.from({ length: 20 }).map(() => ({
+  const data = Array.from({ length: quantity }).map(() => ({
     name: dayjs(faker.date.past()).format('DD/MM/YYYY'),
     pdfUrl: faker.image.animals(),
     categoryId: getRandomElement(categories).id,
