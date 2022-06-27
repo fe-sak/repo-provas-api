@@ -2,7 +2,20 @@
 This is a private REST API for the webpage [repo-provas](https://github.com/fe-sak/repo-provas).
 The application manages school tests, where users can create a test by providing a PDF url link. \
 
+## Table of contents
+<!--ts-->
+   * [Features](#features)
+   * [Endpoints](#endpoints)
+   * [Database](#database)
+   * [Technologies](#technologies)
+   * [Prerequisites](#prerequisites)
+   * [Setup](#setup)
+   * [Tests](#tests)
+   
+<!--te-->
+
 ## Features
+[(Return to table of contents)](#table-of-contents)
 
 :green_circle: User authentication \
 :green_circle: Retrieve all categories \
@@ -22,6 +35,8 @@ Each test must have a teacher and be part of a category and a discipline.
 
 ## Endpoints
 
+[(Return to table of contents)](#table-of-contents)
+
 | Method /route       | expected body                                                                             | response          | Info                          |
 |---------------------|-------------------------------------------------------------------------------------------|-------------------|-------------------------------|
 | POST /signup        | {   name: string,   email: string,   password: string  }                                  | Ok                | Register a user               |
@@ -34,6 +49,9 @@ Each test must have a teacher and be part of a category and a discipline.
 | POST /tests/:testId |                                                                                           | Ok                | Increment a test's view count |
 
 ## Database 
+
+[(Return to table of contents)](#table-of-contents)
+
 The database diagram: 
 
 ![drawSQL-export-2022-06-27_01 05](https://user-images.githubusercontent.com/92526601/175858045-e5b174a2-6e67-45b9-b187-20c7457c545a.png)
@@ -47,7 +65,10 @@ Entities explained:
 - categories: categories a test might be a part of (e.g.: P1 means first test of the term, P2 means second test of the term, and so forth)
 - tests: tests given by a teacher. Each is part of a discipline's class, has a category and is given by a teacher
 
-## Technologies used
+## Technologies
+
+[(Return to table of contents)](#table-of-contents)
+
 ![TypeScript](https://img.shields.io/badge/-TypeScript-black?style=flat&logo=typescript) 
 ![npm](https://img.shields.io/badge/-npm-black?style=flat&logo=npm) 
 ![Node.js](https://img.shields.io/badge/-Node.js-black?style=flat&logo=node.js) 
@@ -61,27 +82,27 @@ Entities explained:
 
 The rest of the libs are in the [package.json](https://github.com/fe-sak/repo-provas-api/blob/main/package.json) file inside the dependencies and devDependencies keys.
 
-## Prerequisites for running the project in your local machine
+## Prerequisites
+
+[(Return to table of contents)](#table-of-contents)
 
 - Bash Shell or any kind of shell for running commands in your terminal (all commands seen in this document are run inside a shell). If you're using Linux, it is installed by default. If you're using Windows, I suggest you follow this [guide](https://itsfoss.com/install-bash-on-windows/)
 - [Git](https://git-scm.com) installed for cloning the project and managing source code changes. You must also configure your git tool for connecting to GitHub using ssh. [The official GitHub guides](https://docs.github.com/en/authentication/connecting-to-github-with-ssh)
 - Nodejs installed. It is recommended to use a version manager, such as [nvm](https://github.com/nvm-sh/nvm)
 - PostgreSQL for database service. Find your OS distribution and follow the [guides](https://www.postgresql.org/download/)
 
-## Download project
+## Setup
 
-Prerequisites met, clone the GitHub repository running:
-```
-git clone git@github.com:fe-sak/repo-provas-api.git
-```
-The project is already in your machine.
+[(Return to table of contents)](#table-of-contents)
 
-To access the downloaded folder, run:
+Setup the development environment.
 ```
-cd repo-provas-api
-```
+# Clone project: 
+$ git clone git@github.com:fe-sak/repo-provas-api.git
 
-## Setup environment variables
+# Access the downloaded folder:
+$ cd repo-provas-api
+```
 
 Before running the application, it is needed to configure the environment variables. 
 Inside the root of the downloaded folder ( /repo-provas-api) there is a .env.example file, and it's contents:
@@ -104,21 +125,19 @@ POSTGRES_DATABASE is the name of the database inside the PostgreSQL service. You
 
 To proceed, it is needed to create a .env file. For that, you may copy the .env.example content to the .env file and tweak the environment variables to meet your needs. \
 
-## Run the application
+Setup Prisma ORM. ( Prisma is a [Object Relational Mapper](https://stackoverflow.com/questions/1279613/what-is-an-orm-how-does-it-work-and-how-should-i-use-one)):
+```
+# Create the development database:
+$ npx prisma migrate dev
 
-To run the application, it is needed to setup Prisma ORM. ( Prisma is a [Object Relational Mapper](https://stackoverflow.com/questions/1279613/what-is-an-orm-how-does-it-work-and-how-should-i-use-one)). To do so, run:
+# Populate the database:
+$ npx prisma db seed
 ```
-npx prisma migrate dev
-```
-Then, populate the database with default data, running:
-```
-npx prisma db seed
-```
-This uses the TypeScript file seed. You can find it in [/prisma/seed.ts](https://github.com/fe-sak/repo-provas-api/blob/main/prisma/seed.ts). You may tweak the default data to facilitate development.
+This command uses a file seed. You can find it in [/prisma/seed.ts](https://github.com/fe-sak/repo-provas-api/blob/main/prisma/seed.ts). Tweak it if needed.
 
-After setting up everything, start the development environment running:
+Start the development environment running:
 ```
-npm run dev
+$ npm run dev
 ```
 If everything is ok, you'll probably see this in your terminal:
 ```
@@ -150,6 +169,8 @@ These are suggestions, you may use any of your preference.
 
 ## Tests
 
+[(Return to table of contents)](#table-of-contents)
+
 First, setup the environment variables, creating a .env.test file:
 ```
 DATABASE_URL=postgres://postgres:123456@localhost:5432/repo-provas_test
@@ -157,14 +178,12 @@ JWT_SECRET=SECRET
 ```
 Notice the only difference between .env.test and .env is the database name. I suggest adding "\_test" at the end, but you may choose any name, as long as it is not the same as the development database name.
 
-Secondly, create the test database:
 ```
-npm run create-test-db
-```
+# Create the test database:
+$ npm run create-test-db
 
-After setting up the database, we can now run the tests:
-```
-npm run test
+# Run tests:
+$ npm run test
 ```
 
 You chould see something like this:
