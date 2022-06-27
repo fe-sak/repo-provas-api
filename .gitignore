@@ -1,5 +1,5 @@
 /node_modules
-.env
-.env.test
+.env*
+!.env.example
 .vscode
 /database
