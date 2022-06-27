@@ -106,6 +106,16 @@ To proceed, it is needed to create a .env file. For that, you may copy the .env.
 
 ## Run the application
 
+To run the application, it is needed to setup Prisma ORM. ( Prisma is a [Object Relational Mapper](https://stackoverflow.com/questions/1279613/what-is-an-orm-how-does-it-work-and-how-should-i-use-one)). To do so, run:
+```
+npx prisma migrate dev
+```
+Then, populate the database with default data, running:
+```
+npx prisma db seed
+```
+This uses the TypeScript file seed. You can find it in [/prisma/seed.ts](https://github.com/fe-sak/repo-provas-api/blob/main/prisma/seed.ts). You may tweak the default data to facilitate development.
+
 After setting up everything, start the development environment running:
 ```
 npm run dev
@@ -129,7 +139,7 @@ Awesome! The application is running locally. You can access it using the url:
 http://localhost:<PORT>/
 ```
 
-Give it a try, sending a http request with method GET to route /health. (url: http://localhost:5000/health). It should return http response status 200.
+Give it a try, send a http request with method GET to route /health. (url: http://localhost:5000/health). It should return http response status 200.
 Observation: to send a http request, you need a REST API client. There are VS Code extensions, desktop applications and web applications.
 
 - VS Code application: [Thunder Client](https://marketplace.visualstudio.com/items?itemName=rangav.vscode-thunder-client)
@@ -137,3 +147,82 @@ Observation: to send a http request, you need a REST API client. There are VS Co
 - A web application: [postman](https://www.postman.com/) \
 
 These are suggestions, you may use any of your preference.
+
+## Tests
+
+First, setup the environment variables, creating a .env.test file:
+```
+DATABASE_URL=postgres://postgres:123456@localhost:5432/repo-provas_test
+JWT_SECRET=SECRET
+```
+Notice the only difference between .env.test and .env is the database name. I suggest adding "\_test" at the end, but you may choose any name, as long as it is not the same as the development database name.
+
+Secondly, create the test database:
+```
+npm run create-test-db
+```
+
+After setting up the database, we can now run the tests:
+```
+npm run test
+```
+
+You chould see something like this:
+```
+➜  repo-provas-api git:(tests) ✗ npm run test          
+
+> repo-provas-api@1.0.0 test
+> npx dotenv -e .env.test prisma migrate dev && NODE_OPTIONS=--experimental-vm-modules dotenv -e .env.test jest
+
+Environment variables loaded from .env
+Prisma schema loaded from prisma/schema.prisma
+Datasource "db": PostgreSQL database "repo-provas_tests", schema "public" at "localhost:5432"
+
+Already in sync, no schema change or pending migration was found.
+
+✔ Generated Prisma Client (3.12.0 | library) to ./node_modules/@prisma/client in 395ms
+
+
+(node:52658) ExperimentalWarning: VM Modules is an experimental feature. This feature could change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ PASS  tests/index.test.ts (48.45 s)
+  POST /login
+    ✓ should answer with status code 200 when given valid credentials (1764 ms)
+    ✓ should answer with status code 401 when given unregistered email (178 ms)
+    ✓ should answer with status code 401 when given wrong password (434 ms)
+  POST /signup
+    ✓ should answer with status code 201 when given valid signup (209 ms)
+    ✓ should answer with status code 409 when given an already registered email (148 ms)
+    ✓ should answer with status code 422 when given an empty signup (80 ms)
+    ✓ should answer with status code 422 when given an invalid email (24 ms)
+  GET /categories
+    ✓ should return status code 200 if given valid token (283 ms)
+    ✓ should return status code 401 if given invalid token (29 ms)
+  GET /disciplines
+    ✓ should return status code 200 if given valid token (264 ms)
+    ✓ should return status code 401 if given invalid token (29 ms)
+  GET /teachers
+    ✓ should return status code 200 if given valid token (262 ms)
+    ✓ should return status code 401 if given invalid token (49 ms)
+  GET /tests
+    ✓ should return status code 200 if given valid token (280 ms)
+    ✓ should return status code 401 if given invalid token (26 ms)
+  GET /tests?byTeachers=true
+    ✓ should return status code 200 if given valid token (265 ms)
+    ✓ should return status code 401 if given invalid token (18 ms)
+  POST /tests
+    ✓ should answer with status code 201 when given valid body (354 ms)
+    ✓ should answer with status code 401 when given invalid token (39 ms)
+    ✓ should answer with status code 422 when given invalid body (239 ms)
+    ✓ should answer with status code 404 when given non existing ids (239 ms)
+  POST /tests/:testId
+    ✓ should answer with status code 201 when given valid testId (292 ms)
+    ✓ should answer with status code 404 when given invalid testId (299 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       23 passed, 23 total
+Snapshots:   0 total
+Time:        49.648 s
+Ran all test suites.
+```
+If all test suites passes, you're good to go!
