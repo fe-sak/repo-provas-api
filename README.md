@@ -129,7 +129,7 @@ Awesome! The application is running locally. You can access it using the url:
 http://localhost:<PORT>/
 ```
 
-Give it a try, sending a http request with method POST to route /signup. (url: http://localhost:5000/signup). If you get the error "422 - Unprocessable Entity", the application is working!
+Give it a try, sending a http request with method GET to route /health. (url: http://localhost:5000/health). It should return http response status 200.
 Observation: to send a http request, you need a REST API client. There are VS Code extensions, desktop applications and web applications.
 
 - VS Code application: [Thunder Client](https://marketplace.visualstudio.com/items?itemName=rangav.vscode-thunder-client)
