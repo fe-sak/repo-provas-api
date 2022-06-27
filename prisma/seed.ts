@@ -7,14 +7,7 @@ async function main() {
   const teachers = ['Dina', 'Bruna', 'Leo', 'Thiago', 'Iagod'];
   const categories = ['P1', 'P2', 'P3', 'P4'];
   const terms = [1, 2, 3, 4];
-  const disciplines = [
-    'CSS',
-    'TypeScript',
-    'C',
-    'PostgreSQL',
-    'React',
-    'Python',
-  ];
+  const disciplines = ['CSS', 'TypeScript', 'C', 'PostgreSQL', 'React', 'Python'];
 
   await createTeachers(teachers);
   await createCategories(categories);
