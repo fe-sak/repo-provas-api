@@ -44,7 +44,7 @@ services:
       - ./src:/usr/src/repo-provas-api/src
       - ./prisma:/usr/src/repo-provas-api/prisma
       - ./.env.development:/usr/src/repo-provas-api/.env.development
-      - ./.eslintrc.js:/usr/src/repo-provas-api/.eslintrc.js
+      - ./.eslintrc.json:/usr/src/repo-provas-api/.eslintrc.json
       - ./.eslintignore:/usr/src/repo-provas-api/.eslintignore
       - ./.prettierrc.js:/usr/src/repo-provas-api/.prettierrc.js
       - ./tsconfig.json:/usr/src/repo-provas-api/tsconfig.json
