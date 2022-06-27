@@ -10,8 +10,8 @@
   "scripts": {
     "build": "tsc",
     "start": "node dist/server.js",
-    "dev": "fuser -k 5000/tcp ; nodemon src/server.ts",
-    "create-test-db": "npx dotenv -e .env.test prisma migrate dev",
+    "dev": "fuser -k 5000/tcp ; nodemon --ignore 'tests/*' src/server.ts",
+    "create-test-db": "npx dotenv -e .env.test prisma migrate reset",
     "test": "npx dotenv -e .env.test prisma migrate dev && NODE_OPTIONS=--experimental-vm-modules dotenv -e .env.test jest"
   },
   "keywords": [],
