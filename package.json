@@ -11,8 +11,13 @@
     "build": "tsc",
     "start": "node dist/server.js",
     "dev": "fuser -k 5000/tcp ; nodemon --ignore 'tests/*' src/server.ts",
+    "dev:load-envs": "dotenv -e .env.development",
     "create-test-db": "npx dotenv -e .env.test prisma migrate reset",
-    "test": "npx dotenv -e .env.test prisma migrate dev && NODE_OPTIONS=--experimental-vm-modules dotenv -e .env.test jest"
+    "test": "npx dotenv -e .env.test prisma migrate dev && NODE_OPTIONS=--experimental-vm-modules dotenv -e .env.test jest",
+    "dev-docker:compose": "docker-compose -f docker-compose.development.yml --env-file .env.development",
+    "dev-docker:up": "npm run dev-docker:compose -- up",
+    "dev-docker:down": "npm run dev-docker:compose -- down",
+    "dev-docker:command": "npm run dev:load-envs npx prisma generate && npm run dev:load-envs npx prisma migrate deploy && npm run dev:load-envs npx prisma db seed && npm run dev:load-envs npm run dev"
   },
   "keywords": [],
   "author": "",
