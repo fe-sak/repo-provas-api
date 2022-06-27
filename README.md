@@ -1,6 +1,6 @@
 # repo-provas-api
 This is a private REST API for the webpage [repo-provas](https://github.com/fe-sak/repo-provas).
-The application manages school tests, where users can create a test by providing a PDF url link. \
+The application manages school tests, where users can create a test by providing a PDF url link.
 
 ## Table of contents
 <!--ts-->
@@ -90,6 +90,7 @@ The rest of the libs are in the [package.json](https://github.com/fe-sak/repo-pr
 - [Git](https://git-scm.com) installed for cloning the project and managing source code changes. You must also configure your git tool for connecting to GitHub using ssh. [The official GitHub guides](https://docs.github.com/en/authentication/connecting-to-github-with-ssh)
 - Nodejs installed. It is recommended to use a version manager, such as [nvm](https://github.com/nvm-sh/nvm)
 - PostgreSQL for database service. Find your OS distribution and follow the [guides](https://www.postgresql.org/download/)
+- A IDE for coding. The most popular one is [VS Code](https://code.visualstudio.com/)
 
 ## Setup
 
@@ -160,12 +161,10 @@ http://localhost:<PORT>/
 
 Give it a try, send a http request with method GET to route /health. (url: http://localhost:5000/health). It should return http response status 200.
 Observation: to send a http request, you need a REST API client. There are VS Code extensions, desktop applications and web applications.
-
+Suggestions:
 - VS Code application: [Thunder Client](https://marketplace.visualstudio.com/items?itemName=rangav.vscode-thunder-client)
 - Desktop application: [Insonmina](https://insomnia.rest/)
-- A web application: [postman](https://www.postman.com/) \
-
-These are suggestions, you may use any of your preference.
+- A web application: [postman](https://www.postman.com/)
 
 ## Tests
 
