@@ -46,6 +46,8 @@ model DisciplineTeacher {
   discipline   Discipline @relation(fields: [disciplineId], references: [id])
   tests        Test[]
 
+
+  @@unique([teacherId, disciplineId])
   @@map("disciplinesTeachers")
 }
 
@@ -73,6 +75,7 @@ model Test {
   disciplineTeacherId Int
   category            Category          @relation(fields: [categoryId], references: [id])
   disciplineTeacher   DisciplineTeacher @relation(fields: [disciplineTeacherId], references: [id])
+  views               Int               @default(0)
 
 
   @@map("tests")
