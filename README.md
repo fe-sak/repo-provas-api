@@ -25,9 +25,7 @@ The application manages school tests, where users can create a test by providing
 :green_circle: Create a test \
 :green_circle: Increment test views \
 :white_circle: Upload a PDF file \
-:white_circle: Create a category \
-:white_circle: Create a discipline \
-:white_circle: Create a teacher
+:white_circle: GitHub OAuth2
 
 Each test must have a teacher and be part of a category and a discipline.
 
