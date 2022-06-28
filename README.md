@@ -17,15 +17,15 @@ The application manages school tests, where users can create a test by providing
 ## Features
 [(Return to table of contents)](#table-of-contents)
 
-:green_circle: User authentication \
-:green_circle: Retrieve all categories \
-:green_circle: Retrieve all disciplines \
-:green_circle: Retrieve all teachers \
-:green_circle: Retrieve all tests \
-:green_circle: Create a test \
-:green_circle: Increment test views \
-:white_circle: Upload a PDF file \
-:white_circle: GitHub OAuth2
+- [x] User authentication \
+- [x] Retrieve all categories \
+- [x] Retrieve all disciplines \
+- [x] Retrieve all teachers \
+- [x] Retrieve all tests \
+- [x] Create a test \
+- [x] Increment test views \
+- [ ] Upload a PDF file \
+- [ ] GitHub OAuth2
 
 Each test must have a teacher and be part of a category and a discipline.
 
