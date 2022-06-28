@@ -166,6 +166,7 @@ http://localhost:<PORT>/
 ```
 
 Give it a try. Send a http request with method GET to route /health. (http://localhost:<PORT>/health). It should return an http response with a status code of 200.
+  
 Observation: to send an http request, you need a REST API client. There are VS Code extensions, desktop applications, and web applications.
 Suggestions:
 - VS Code application: [Thunder Client](https://marketplace.visualstudio.com/items?itemName=rangav.vscode-thunder-client)
