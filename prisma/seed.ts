@@ -7,20 +7,14 @@ async function main() {
   const teachers = ['Dina', 'Bruna', 'Leo', 'Thiago', 'Iagod'];
   const categories = ['P1', 'P2', 'P3', 'P4'];
   const terms = [1, 2, 3, 4];
-  const disciplines = [
-    'CSS',
-    'TypeScript',
-    'C',
-    'PostgreSQL',
-    'React',
-    'Python',
-  ];
+  const disciplines = ['CSS', 'TypeScript', 'C', 'PostgreSQL', 'React', 'Python'];
+
   await createTeachers(teachers);
   await createCategories(categories);
   await createTerms(terms);
   await createDisciplines(disciplines);
   await createDisciplinesTeachers();
-  await createTests();
+  await createTests(20);
 }
 
 main()
@@ -74,11 +68,11 @@ async function createDisciplinesTeachers() {
   await createMany(data, 'disciplineTeacher');
 }
 
-async function createTests() {
+async function createTests(quantity: number) {
   const categories = await database.category.findMany();
   const disciplinesTeachers = await database.disciplineTeacher.findMany();
 
-  const data = Array.from({ length: 20 }).map(() => ({
+  const data = Array.from({ length: quantity }).map(() => ({
     name: dayjs(faker.date.past()).format('DD/MM/YYYY'),
     pdfUrl: faker.image.animals(),
     categoryId: getRandomElement(categories).id,

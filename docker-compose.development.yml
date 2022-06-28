@@ -1,0 +1,55 @@
+version: '3'
+services:
+  repo-provas-postgres-development:
+    image: postgres:13-alpine
+    container_name: repo-provas-postgres-development
+    environment:
+      POSTGRES_USER: ${POSTGRES_USERNAME}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DATABASE}
+    ports:
+      - ${POSTGRES_PORT}:${POSTGRES_PORT}
+    volumes:
+      - repo-provas-postgres-data:/var/lib/postgresql/data
+    command: postgres -p ${POSTGRES_PORT}
+
+  repo-provas-redis-development:
+    container_name: repo-provas-redis-development
+    image: redis:6.2-alpine
+    restart: always
+    ports:
+      - ${REDIS_PORT}:${REDIS_PORT}
+    command: redis-server --save 20 1 --loglevel warning --requirepass ${REDIS_PASSWORD} --port ${REDIS_PORT}
+    volumes:
+      - /usr/local/repo-provas-redis/data:/data
+
+  repo-provas-development:
+    build:
+      context: .
+      dockerfile: Dockerfile.development
+    container_name: repo-provas-development
+    depends_on:
+      - repo-provas-postgres-development
+      - repo-provas-redis-development
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: '10m'
+        max-file: '5'
+    working_dir: /usr/src/repo-provas-api
+    command: bash -c "npm run dev-docker:command"
+    environment:
+      NODE_ENV: development
+    volumes:
+      - ./src:/usr/src/repo-provas-api/src
+      - ./prisma:/usr/src/repo-provas-api/prisma
+      - ./.env.development:/usr/src/repo-provas-api/.env.development
+      - ./.eslintrc.json:/usr/src/repo-provas-api/.eslintrc.json
+      - ./.eslintignore:/usr/src/repo-provas-api/.eslintignore
+      - ./.prettierrc.js:/usr/src/repo-provas-api/.prettierrc.js
+      - ./tsconfig.json:/usr/src/repo-provas-api/tsconfig.json
+    ports:
+      - ${PORT}:${PORT}
+
+volumes:
+  repo-provas-postgres-data:

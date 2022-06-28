@@ -77,6 +77,5 @@ model Test {
   disciplineTeacher   DisciplineTeacher @relation(fields: [disciplineTeacherId], references: [id])
   views               Int               @default(0)
 
-
   @@map("tests")
 }
