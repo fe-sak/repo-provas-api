@@ -17,15 +17,15 @@ The application manages school tests, where users can create a test by providing
 ## Features
 [(Return to table of contents)](#table-of-contents)
 
-- [x] User authentication \
-- [x] Retrieve all categories \
-- [x] Retrieve all disciplines \
-- [x] Retrieve all teachers \
-- [x] Retrieve all tests \
-- [x] Create a test \
-- [x] Increment test views \
-- [ ] Upload a PDF file \
-- [ ] GitHub OAuth2
+- [x] User authentication 
+- [x] Retrieve all categories 
+- [x] Retrieve all disciplines 
+- [x] Retrieve all teachers 
+- [x] Retrieve all tests 
+- [x] Create a test 
+- [x] Increment test views 
+- [ ] Upload a PDF file 
+- [ ] GitHub OAuth
 
 Each test must have a teacher and be part of a category and a discipline.
 
