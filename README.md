@@ -58,12 +58,12 @@ The database diagram:
 
 Entities explained:
 - users: used for authentication. Only authenticated users can create a test
-- terms: school terms (e.g.: first quarter, second bimester, et cetera) 
-- disciplines: disciplines lectured by a teacher (e.g.: JavaScript, SQL, React, et  cetera)
+- terms: school terms (e.g., first quarter, second semester, et cetera) 
+- disciplines: disciplines lectured by a teacher (e.g.: JavaScript, SQL, React, et cetera)
 - teachers: teachers who give tests. (e.g: John, Mateus de Nardo, Iago, et cetera)
-- disciplinesTeachers: relationship many-to-many between teachers and disciplines. This means that each teacher may lecture more than on discipline, and vice versa
-- categories: categories a test might be a part of (e.g.: P1 means first test of the term, P2 means second test of the term, and so forth)
-- tests: tests given by a teacher. Each is part of a discipline's class, has a category and is given by a teacher
+- disciplinesTeachers: relationship many-to-many between teachers and disciplines. This means that each teacher may lecture in more than one discipline and vice versa.
+- categories: categories a test might be a part of (e.g., P1 means the first test of the term, P2 means the second test of the term, and so forth)
+- tests: tests given by a teacher. Each is part of a discipline's class, has a category, and is given by a teacher
 
 ## Technologies
 
@@ -90,13 +90,13 @@ The rest of the libs are in the [package.json](https://github.com/fe-sak/repo-pr
 - [Git](https://git-scm.com) installed for cloning the project and managing source code changes. You must also configure your git tool for connecting to GitHub using ssh. [The official GitHub guides](https://docs.github.com/en/authentication/connecting-to-github-with-ssh)
 - Nodejs installed. It is recommended to use a version manager, such as [nvm](https://github.com/nvm-sh/nvm)
 - PostgreSQL for database service. Find your OS distribution and follow the [guides](https://www.postgresql.org/download/)
-- A IDE for coding. The most popular one is [VS Code](https://code.visualstudio.com/)
+- An IDE for coding. The most popular one is [VS Code](https://code.visualstudio.com/)
 
 ## Setup
 
 [(Return to table of contents)](#table-of-contents)
 
-Setup the development environment.
+### Clone GitHub repository:
 ```
 # Clone project: 
 $ git clone git@github.com:fe-sak/repo-provas-api.git
@@ -105,28 +105,32 @@ $ git clone git@github.com:fe-sak/repo-provas-api.git
 $ cd repo-provas-api
 ```
 
-Before running the application, it is needed to configure the environment variables. 
-Inside the root of the downloaded folder ( /repo-provas-api) there is a .env.example file, and it's contents:
+### Configure env variables:
+
+Inside the downloaded folder root ( /repo-provas-api) there is a [.env.example file](https://github.com/fe-sak/repo-provas-api/blob/main/.env.example):
 ```
-DATABASE_URL=postgres://postgres:123456@localhost:5432/repo-provas
+JWT_SECRET=top_secret
 PORT=5000
-JWT_SECRET=SECRET
-```
-There are three variables:
-- DATABASE_URL: this is a connection string used by the nodejs application to connect to the PostgreSQL server. It's anatomy is as follows: 
-```
-postgres://<POSTGRES_USERNAME>:<POSTGRES_PASSWORD><@<POSTGRES_HOST>:<POSTGRES_PORT>/<POSTGRES_DATABASE>
-```
-POSTGRES_USERNAME and POSTGRES_PASSWORD may be created by you when installing PostgreSQL. But, by default, there is already a user created by the PosgreSQL CLI, "postgres" with password "123456".  \
-POSTGRES_HOST can be any IP or DNS address. But since we are running the PostgreSQL service inside our machine, that means the host is our own machine, and "localhost" is how we tell our machine to connect to itself. \
-POSTGRES_PORT is the port where the PostgreSQL service is running. By default, the service runs at port 5432. \
-POSTGRES_DATABASE is the name of the database inside the PostgreSQL service. You may choose any name. \
-- PORT: port where the nodejs application runs (this is not the same port the PostgreSQL service runs). You can change it to any other port available in your machine.
-- JWT_SECRET: used for jsonwebtoken library for cryptography and authentication. It can be any string you'd like. But, beware of changing it after a user've been created, for the authentication will fail. \
 
-To proceed, it is needed to create a .env file. For that, you may copy the .env.example content to the .env file and tweak the environment variables to meet your needs. \
+POSTGRES_USERNAME=postgres
+POSTGRES_PASSWORD=123456
+POSTGRES_HOST=localhost
+POSTGRES_PORT=5432
+POSTGRES_DATABASE=repo-provas_development
+DATABASE_URL=postgresql://${POSTGRES_USERNAME}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DATABASE}?schema=public
+```
+- JWT_SECRET: used for jsonwebtoken library for cryptography and authentication. It can be any string you'd like. But, beware of changing it after a user  has been created, for the authentication will fail. \
+- PORT: port where nodejs application runs (this is not the same port the PostgreSQL service runs). You can change it to any other port available on your machine. \
+- POSTGRES_USERNAME and POSTGRES_PASSWORD: they are created by you when installing PostgreSQL. But, by default, there is already a user created by the PosgreSQL CLI, "postgres" with a password of "123456".  \
+- POSTGRES_HOST: can be any IP or DNS address. But since we are running the PostgreSQL service inside our machine, that means the host is our own machine, and "localhost" is how we tell our machine to connect to itself. \
+- POSTGRES_PORT: the port where the PostgreSQL service is running. By default, the service runs on port 5432. \
+- POSTGRES_DATABASE: database name inside the PostgreSQL service. You may choose any name. \
+- DATABASE_URL: connection string used by the nodejs application to connect to the PostgreSQL server. \
 
-Setup Prisma ORM. ( Prisma is a [Object Relational Mapper](https://stackoverflow.com/questions/1279613/what-is-an-orm-how-does-it-work-and-how-should-i-use-one)):
+Create a .env file in the root folder (repo-provas/). You may copy the .env.example content to the .env file and tweak the environment variables to meet your needs. \
+Observation: all listed variables must be set inside the .env file.
+
+### Setup Prisma ORM. ( Prisma is a [Object Relational Mapper](https://stackoverflow.com/questions/1279613/what-is-an-orm-how-does-it-work-and-how-should-i-use-one)):
 ```
 # Create the development database:
 $ npx prisma migrate dev
@@ -136,11 +140,13 @@ $ npx prisma db seed
 ```
 This command uses a file seed. You can find it in [/prisma/seed.ts](https://github.com/fe-sak/repo-provas-api/blob/main/prisma/seed.ts). Tweak it if needed.
 
-Start the development environment running:
+### Start the development environment running:
 ```
 $ npm run dev
 ```
-If everything is ok, you'll probably see this in your terminal:
+
+If everything is OK, you should see the following in your terminal:
+
 ```
 ➜  repo-provas-api git:(main) ✗ npm run dev
 
@@ -159,8 +165,8 @@ Awesome! The application is running locally. You can access it using the url:
 http://localhost:<PORT>/
 ```
 
-Give it a try, send a http request with method GET to route /health. (url: http://localhost:5000/health). It should return http response status 200.
-Observation: to send a http request, you need a REST API client. There are VS Code extensions, desktop applications and web applications.
+Give it a try. Send a http request with method GET to route /health. (http://localhost:<PORT>/health). It should return an http response with a status code of 200.
+Observation: to send an http request, you need a REST API client. There are VS Code extensions, desktop applications, and web applications.
 Suggestions:
 - VS Code application: [Thunder Client](https://marketplace.visualstudio.com/items?itemName=rangav.vscode-thunder-client)
 - Desktop application: [Insonmina](https://insomnia.rest/)
@@ -172,10 +178,17 @@ Suggestions:
 
 First, setup the environment variables, creating a .env.test file:
 ```
-DATABASE_URL=postgres://postgres:123456@localhost:5432/repo-provas_test
-JWT_SECRET=SECRET
+JWT_SECRET=top_secret
+PORT=5000
+
+POSTGRES_USERNAME=postgres
+POSTGRES_PASSWORD=123456
+POSTGRES_HOST=localhost
+POSTGRES_PORT=5432
+POSTGRES_DATABASE=repo-provas_test
+DATABASE_URL=postgresql://${POSTGRES_USERNAME}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DATABASE}?schema=public
 ```
-Notice the only difference between .env.test and .env is the database name. I suggest adding "\_test" at the end, but you may choose any name, as long as it is not the same as the development database name.
+Notice the only difference between .env.test and .env is the database name. I suggest adding "\_test" at the end, but you may choose any name, as long as it is not the same as the development database name for isolating development and test environments.
 
 ```
 # Create the test database:
@@ -185,7 +198,7 @@ $ npm run create-test-db
 $ npm run test
 ```
 
-You chould see something like this:
+You should see the following:
 ```
 ➜  repo-provas-api git:(tests) ✗ npm run test          
 
@@ -243,4 +256,4 @@ Snapshots:   0 total
 Time:        49.648 s
 Ran all test suites.
 ```
-If all test suites passes, you're good to go!
+If all the test suites pass, you're good to go!
