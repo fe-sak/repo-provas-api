@@ -9,7 +9,7 @@
   },
   "scripts": {
     "build": "tsc",
-    "start": "node dist/server.js",
+    "start": "node dist/src/server.js",
     "prod:seed": "node dist/prisma/seed.js",
     "dev": "fuser -k 5000/tcp ; nodemon --ignore 'tests/*' src/server.ts",
     "dev:load-envs": "dotenv -e .env.development",

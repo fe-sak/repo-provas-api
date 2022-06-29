@@ -1,0 +1,37 @@
+version: '3'
+services:
+  repo-provas-postgres:
+    image: postgres:13-alpine
+    container_name: repo-provas-postgres
+    environment:
+      POSTGRES_USER: ${POSTGRES_USERNAME}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DATABASE}
+    ports:
+      - ${POSTGRES_PORT}:${POSTGRES_PORT}
+    volumes:
+      - repo-provas-postgres-data:/var/lib/postgresql/data
+    command: postgres -p ${POSTGRES_PORT}
+
+  repo-provas:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: repo-provas
+    depends_on:
+      - repo-provas-postgres
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: '10m'
+        max-file: '5'
+    volumes:
+      - .:/usr/src
+      - /usr/src/node_modules
+    ports:
+      - ${PORT}:${PORT}
+    entrypoint: dockerize -wait tcp://repo-provas-postgres:${POSTGRES_PORT} -timeout 20s docker-entrypoint.sh
+    command: bash -c "npx prisma migrate deploy && npx prisma db seed & npm run dev"
+
+volumes:
+  repo-provas-postgres-data:
