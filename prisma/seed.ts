@@ -8,13 +8,14 @@ async function main() {
   const categories = ['P1', 'P2', 'P3', 'P4'];
   const terms = [1, 2, 3, 4];
   const disciplines = ['CSS', 'TypeScript', 'C', 'PostgreSQL', 'React', 'Python'];
+  const testsQuantity = 0;
 
   await createTeachers(teachers);
   await createCategories(categories);
   await createTerms(terms);
   await createDisciplines(disciplines);
   await createDisciplinesTeachers();
-  await createTests(20);
+  await createTests(testsQuantity);
 }
 
 main()
