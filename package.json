@@ -41,6 +41,7 @@
     "joi": "^17.6.0",
     "jsonwebtoken": "^8.5.1",
     "@faker-js/faker": "^6.2.0",
+    "dayjs": "^1.11.1",
     "prettier": "^2.6.2"
   },
   "devDependencies": {
@@ -52,7 +53,6 @@
     "@types/supertest": "^2.0.12",
     "@typescript-eslint/eslint-plugin": "^5.20.0",
     "@typescript-eslint/parser": "^5.20.0",
-    "dayjs": "^1.11.1",
     "eslint": "^8.13.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-import-resolver-typescript": "^2.7.1",
