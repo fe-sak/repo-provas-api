@@ -13,16 +13,6 @@ services:
       - repo-provas-postgres-data:/var/lib/postgresql/data
     command: postgres -p ${POSTGRES_PORT}
 
-  repo-provas-redis-development:
-    container_name: repo-provas-redis-development
-    image: redis:6.2-alpine
-    restart: always
-    ports:
-      - ${REDIS_PORT}:${REDIS_PORT}
-    command: redis-server --save 20 1 --loglevel warning --requirepass ${REDIS_PASSWORD} --port ${REDIS_PORT}
-    volumes:
-      - /usr/local/repo-provas-redis/data:/data
-
   repo-provas-development:
     build:
       context: .
@@ -30,16 +20,13 @@ services:
     container_name: repo-provas-development
     depends_on:
       - repo-provas-postgres-development
-      - repo-provas-redis-development
     logging:
       driver: 'json-file'
       options:
         max-size: '10m'
         max-file: '5'
     working_dir: /usr/src/repo-provas-api
-    command: bash -c "npm run dev-docker:command"
-    environment:
-      NODE_ENV: development
+    command: bash -c "npm run dev:docker:command"
     volumes:
       - ./src:/usr/src/repo-provas-api/src
       - ./prisma:/usr/src/repo-provas-api/prisma
