@@ -12,7 +12,7 @@ export const loginSchema = Joi.object({
 });
 
 export const createTestSchema = Joi.object({
-  name: Joi.string().required().max(20),
+  name: Joi.string().required().max(40),
   pdfUrl: Joi.string().required(),
   categoryId: Joi.number().required(),
   disciplineTeacherId: Joi.number().required(),
